@@ -1,9 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SalesWebMVC.Data;
+using System.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SalesWebMVCContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SalesWebMVCContext") ?? throw new InvalidOperationException("Connection string 'SalesWebMVCContext' not found.")));
+    options.UseMySql(builder.Configuration.GetConnectionString("SalesWebMVCContext"), new MySqlServerVersion(new Version()) , builder =>
+	builder.MigrationsAssembly("SalesWebMVC")));
+
+// Solução do erro em options.MySql (cs1503) tirada de:
+// https://stackoverflow.com/questions/66720614/cannot-convert-from-string-to-microsoft-entityframeworkcore-serverversion
+// onde sugere adicionar new MySqlServerVersion(new Version()) como argumento
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
