@@ -8,7 +8,10 @@
         public DateTime BirthDate { get; set; }
         public double BaseSalary { get; set; }
 
-        public Department Department { get; set; } 
+        public Department Department { get; set; }
+        // DepartmentId provêm integridade referencial, já que chave estrangeira não pode ser nula
+        // O Entity a reconhece pelo case "XxxxId"
+        public int DepartmentId { get; set; }
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
 
         public Seller () { }
