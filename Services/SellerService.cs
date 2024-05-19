@@ -26,6 +26,7 @@ namespace SalesWebMVC.Services
 
         public Seller FindById(int id)
         {
+            //Include torna a função um Eager Loading, que é carregar objetos associados ao obj principal
             return _context.Seller.Include(obj => obj.Department).FirstOrDefault(obj => obj.Id == id);
 		}
 
